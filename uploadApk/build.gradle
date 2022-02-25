@@ -1,0 +1,31 @@
+plugins {
+    id 'groovy'
+    id 'maven-publish'
+    id 'groovy-gradle-plugin'
+}
+
+dependencies {
+    implementation 'com.android.tools.build:gradle:7.0.4'
+}
+
+gradlePlugin {
+    plugins {
+        standaloneGradlePlugins {
+            id = "com.imiyar.upload"
+            implementationClass = "com.imiyar.upload.UploadApkPlugin.groovy"
+        }
+    }
+
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.imiyar.upload'
+            artifactId = 'uploadApk'
+            version = '1.0.0'
+
+            from components.java // 要把源码jar包上传
+        }
+    }
+}
