@@ -2,10 +2,14 @@ plugins {
     id 'groovy'
     id 'maven-publish'
     id 'java-gradle-plugin'
+    id 'kotlin'
 }
 
 dependencies {
     implementation 'com.android.tools.build:gradle:4.2.0'
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
 
 gradlePlugin {
