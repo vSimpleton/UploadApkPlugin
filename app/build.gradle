@@ -1,6 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.imiyar.upload'
+}
+
+uploadApk {
+    reinforceUserName "17722874514"
+    reinforcePassword "msm.7751"
+    reinforceFilePath "/Users/sherry/Desktop/jiagu/jiagu.jar"
+    inputFilePath "/Users/sherry/ASProjects/UploadApkPlugin/app/release/app-release.apk"
+    outputFilePath "/Users/sherry/ASProjects/UploadApkPlugin/app/release/"
 }
 
 android {
@@ -16,8 +25,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../upload.keystore')
+            storePassword '123456'
+            keyAlias 'upload'
+            keyPassword '123456'
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

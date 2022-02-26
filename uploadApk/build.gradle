@@ -1,18 +1,18 @@
 plugins {
     id 'groovy'
     id 'maven-publish'
-    id 'groovy-gradle-plugin'
+    id 'java-gradle-plugin'
 }
 
 dependencies {
-    implementation 'com.android.tools.build:gradle:7.0.4'
+    implementation 'com.android.tools.build:gradle:4.2.0'
 }
 
 gradlePlugin {
     plugins {
         standaloneGradlePlugins {
             id = "com.imiyar.upload"
-            implementationClass = "com.imiyar.upload.UploadApkPlugin.groovy"
+            implementationClass = "com.imiyar.upload.UploadApkPlugin"
         }
     }
 
