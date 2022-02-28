@@ -8,8 +8,10 @@ uploadApk {
     reinforceUserName "17722874514"
     reinforcePassword "msm.7751"
     reinforceFilePath "/Users/sherry/Desktop/jiagu/jiagu.jar"
-    inputFilePath "/Users/sherry/ASProjects/UploadApkPlugin/app/release/app-release.apk"
-    outputFilePath "/Users/sherry/ASProjects/UploadApkPlugin/app/release/"
+    outputDirectory "/Users/sherry/ASProjects/UploadApkPlugin/app/build/outputs/apk/release/"
+
+    apiKey "817ce4f733190ec1209d170ae3baf0c3"
+    appName "GradleTest"
 }
 
 android {

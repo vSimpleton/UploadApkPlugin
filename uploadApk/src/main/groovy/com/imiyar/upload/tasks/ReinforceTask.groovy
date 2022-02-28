@@ -1,6 +1,7 @@
 package com.imiyar.upload.tasks
 
 import com.android.build.gradle.api.ApplicationVariant
+import com.android.build.gradle.api.BaseVariantOutput
 import com.android.builder.model.SigningConfig
 import com.imiyar.upload.UploadApkExtension
 import com.imiyar.upload.UploadApkPlugin
@@ -25,6 +26,10 @@ class ReinforceTask extends DefaultTask {
         UploadApkExtension uploadApkExtension = project.extensions.findByName(UploadApkPlugin.UPLOAD_APK_EXTENSION)
         // 获取签名信息，以便后面进行重签名
         SigningConfig signingConfig = variant.signingConfig
+        String apkFilePath
+        variant.outputs.all { BaseVariantOutput output ->
+            apkFilePath = output.outputFile.absolutePath
+        }
 
         // 调用命令行工具执行360加固的登录操作
         project.exec { ExecSpec spec ->
@@ -45,7 +50,7 @@ class ReinforceTask extends DefaultTask {
         // 调用命令行工具执行360加固的加固操作
         project.exec { ExecSpec spec ->
             spec.commandLine("java", "-jar", uploadApkExtension.reinforceFilePath,
-                    "-jiagu", uploadApkExtension.inputFilePath, uploadApkExtension.outputFilePath, "-autosign")
+                    "-jiagu", apkFilePath, uploadApkExtension.outputDirectory, "-autosign")
         }
     }
 
