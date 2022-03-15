@@ -7,6 +7,8 @@ import com.imiyar.upload.UploadApkExtension
 import com.imiyar.upload.UploadApkPlugin
 import com.imiyar.upload.api.ApiConstants
 import com.imiyar.upload.api.PgyUploadService
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import okhttp3.ResponseBody
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Internal
@@ -42,9 +44,16 @@ class PgyUploadTask extends DefaultTask {
         if (directory.isDirectory()) {
             File[] files = directory.listFiles()
             for (File file : files) {
-                if (file.getName().contains("jiagu") && file.getName().endsWith(".apk")) {
-                    outputFile = file
-                    break
+                if (uploadApkExtension.isOpenReinforce) {
+                    if (file.getName().contains("jiagu") && file.getName().endsWith(".apk")) {
+                        outputFile = file
+                        break
+                    }
+                } else {
+                    if (file.getName().endsWith(".apk")) {
+                        outputFile = file
+                        break
+                    }
                 }
             }
         }
@@ -56,8 +65,33 @@ class PgyUploadTask extends DefaultTask {
                     ApiFactory.getInstance().getFilePart("application/vnd.android.package-archive", outputFile))
                     .execute()
 
-            println("\nAppResponse:" + new Gson().toJson(appResponse.body().string()))
+            String result = appResponse.body().string()
+            PgyResponse response = new Gson().fromJson(result, PgyResponse.class)
+            if (response != null) {
+                SendMsgToDingTalkTask.setUrl(response.data.buildShortcutUrl, response.data.buildQRCodeURL)
+            }
+        } else {
+            println("Could not found the apk file")
         }
+    }
+
+    static class PgyResponse {
+
+        public int code
+        public String message
+        public PgyDetail data
+
+        static class PgyDetail {
+
+            public String buildShortcutUrl
+            public String buildUpdated
+            public String buildQRCodeURL
+            public String buildVersion
+            public String buildVersionNo
+            public String buildIcon
+
+        }
+
     }
 
 }

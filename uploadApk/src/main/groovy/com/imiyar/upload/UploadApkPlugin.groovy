@@ -4,6 +4,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.imiyar.upload.tasks.PgyUploadTask
 import com.imiyar.upload.tasks.ReinforceTask
+import com.imiyar.upload.tasks.SendMsgToDingTalkTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -31,10 +32,14 @@ class UploadApkPlugin implements Plugin<Project> {
                     PgyUploadTask pgyUploadTask = project.tasks.create("pgyUploadRelease", PgyUploadTask)
                     pgyUploadTask.init(variant)
 
+                    SendMsgToDingTalkTask dingTalkTask = project.tasks.create("sendMsgRelease", SendMsgToDingTalkTask)
+                    dingTalkTask.init()
+
                     // 修改task的依赖关系
                     variant.getAssembleProvider().get().dependsOn(project.getTasks().findByName("clean"))
                     reinforceTask.dependsOn(variant.getAssembleProvider().get())
                     pgyUploadTask.dependsOn(reinforceTask)
+                    dingTalkTask.dependsOn(pgyUploadTask)
 
                 }
             }

@@ -5,13 +5,19 @@ plugins {
 }
 
 uploadApk {
-    reinforceUserName "17722874514"
-    reinforcePassword "msm.7751"
+    // 360加固相关
+    reinforceUserName "360加固账号"
+    reinforcePassword "360加固密码"
     reinforceFilePath "/Users/sherry/Desktop/jiagu/jiagu.jar"
     outputDirectory "/Users/sherry/ASProjects/UploadApkPlugin/app/build/outputs/apk/release/"
+    isOpenReinforce false
 
-    apiKey "817ce4f733190ec1209d170ae3baf0c3"
-    appName "GradleTest"
+    // 上传蒲公英相关
+    apiKey "xxx"
+    appName "UploadApkPlugin"
+
+    // 钉钉机器人相关
+    webHook "xxx"
 }
 
 android {

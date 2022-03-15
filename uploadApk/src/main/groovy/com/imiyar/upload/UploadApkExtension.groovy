@@ -13,4 +13,8 @@ class UploadApkExtension {
     String apiKey  // API Key
     String appName // 应用名称
 
+    // ----------- 发送钉钉消息相关的扩展 -----------
+    String webHook // 钉钉机器人WebHook地址
+    String secret  // 钉钉机器人secret
+
 }
